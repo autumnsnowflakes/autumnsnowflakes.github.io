@@ -8,7 +8,9 @@ const init = () => {
 
     return {
       view: function () {
-        return m('#kickstart.flex.flex-row-l.justify-start',
+        return m('#kickstart.flex.flex-row-l.justify-start.transition', {
+            class: action.background()
+          },
           Content(store, action)
         )
 

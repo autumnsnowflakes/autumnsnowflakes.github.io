@@ -50,6 +50,47 @@
   top: 50px;
 }
 
+.red {
+  background: #e75152;
+}
+
+.silver {
+  background: #dbe1dd;
+}
+
+.yellow {
+  background: #fdfbe4;
+}
+
+.dark-navy {
+  background: #263238;
+}
+
+.bg-about {
+  background: #ee4b4c;
+}
+
+.bg-work {
+  background: #4a9bed;
+}
+
+.bg-contact {
+  background: #d2bdaa;
+}
+
+.color-light-white {
+  color: #90a4ae
+}
+
+.transition {
+  transition: all 300ms ease;
+}
+
+.w-5 {
+  width: 5%;
+}
+
+
 
 /* optional: show position indicator in red */
 
@@ -63,4 +104,35 @@
   line-height: 1.5;
   font-size: 1.1rem;
   font-weight: 400;
+}
+
+#kickstart {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.m-auto {
+  margin: 0 auto;
+}
+
+.menu-icon {
+  transition: all 200ms ease;
+  img {
+    cursor: pointer;
+    transition: all 200ms ease;
+  }
+  span {
+    transition: all 200ms ease;
+    cursor: pointer;
+  }
+  &:hover {
+    span {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+    img {
+      transform: translateY(-3px);
+    }
+  }
 }
