@@ -1,0 +1,66 @@
+@import "../asset/tachyons/css/tachyons.min.css";
+@import "../asset/animate.css/animate.min.css";
+@font-face {
+  font-family: 'Lato';
+  src: url('../asset/font/Lato/Lato-Light.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../asset/font/Lato/Lato-Regular.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../asset/font/Lato/Lato-Bold.ttf');
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../asset/font/Roboto/Roboto-Light.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../asset/font/Roboto/Roboto-Regular.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../asset/font/Roboto/Roboto-Bold.ttf');
+  font-weight: 900;
+}
+
+.lato {
+  font-family: 'Lato';
+}
+
+.roboto {
+  font-family: 'Roboto';
+}
+
+.sticky {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 50px;
+}
+
+
+/* optional: show position indicator in red */
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+* {
+  @extend .lato;
+  color: #777;
+  line-height: 1.5;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
