@@ -70,9 +70,9 @@ export default (function () {
       }, ['about', 'work', 'contact'].reduce((obj, item, index) => {
         obj[index] = m(`section.${item}-ns.h-100-l.h-33`, {
             class: `${store.isSectionOpen
-                ?store.mode===item
+                ?store.selectedSection===index
                 ?'w-100 active overflow-x-hidden'
-                :'w-33-l pa2 w-100'
+                :'w-33-l w-100'
                 :'w-33-l flex-l db flex-column justify-end-l pointer pa2 w-100' 
               }`,
             sectionId: index + 1,
