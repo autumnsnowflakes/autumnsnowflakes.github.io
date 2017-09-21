@@ -1,30 +1,22 @@
 import m from 'mithril';
 
+import About from './About';
+import Work from './Work';
+import Contact from './Contact';
 
 export default (function () {
 
-  const about = (store) => {
-    console.log('about');
-    return m('div', 'abour');
-  }
-  const work = (store) => {
-    return m('div', 'work');
-  }
-
-  const contact = (store) => {
-    return m('div', 'contact');
-  }
 
   function page(store) {
     switch (store.selectedSection) {
       case 1:
-        return about(store);
+        return About();
         break;
       case 2:
-        return work(store);
+        return Work();
         break;
       case 3:
-        return contact(store);
+        return Contact();
         break;
     }
   }
@@ -72,8 +64,8 @@ export default (function () {
             class: `${store.isSectionOpen
                 ?store.selectedSection===index
                 ?'w-100 active overflow-x-hidden'
-                :'w-33-l w-100'
-                :'w-33-l flex-l db flex-column justify-end-l pointer pa2 w-100' 
+                :'w-33-l'
+                :'w-33-l flex-l db flex-column justify-end-l pointer pa2' 
               }`,
             sectionId: index + 1,
             id: `section-${index+1}`,
@@ -108,9 +100,20 @@ export default (function () {
         return obj;
       }, []), )
     )
+
   }
+
+  const Loader = function () {
+    return m('.overlay-loader.absolute.left-0.right-0.top-0.bottom-0.w-100.h-100.flex.flex-column.justify-center.items-center.z-10', [
+      m('div.title.ttu.roboto.fw9.white-90.f1', "Hello, I'm kavya gollamudi"),
+      m('div.ttu.roboto.fw9.f2-l.f4.white-80', "A writer")
+    ])
+  }
+
   const init = (store, action) => {
     return [
+      store.isLoading ?
+      Loader(store) :
       landing(store, action)
     ]
   }

@@ -9,13 +9,12 @@ const init = () => {
     return {
       view: function () {
         return m('#kickstart.flex.flex-row-l.justify-start.transition', {
-            class: action.background()
+            class: `${store.isSectionOpen?'overflow-x-hidden open':''} ${action.background()}`,
+            oncreate: action.loaderTimer
           },
           Button(store, action),
-          Content(store, action),
-
+          Content(store, action)
         )
-
       }
     }
     return view;

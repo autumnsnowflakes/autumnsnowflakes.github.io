@@ -39,7 +39,7 @@ const init = (store) => {
   const background = function () {
     switch (store.mode) {
       case 'landing':
-        return 'dark-navy';
+        return 'bg-navy';
         break;
       case 'about':
         return 'bg-about';
@@ -217,6 +217,12 @@ const init = (store) => {
   }
 
 
+  const loaderTimer = function () {
+    setTimeout(function () {
+      store.isLoading = false;
+      m.redraw();
+    }, 2500);
+  }
 
 
   return {
@@ -228,6 +234,7 @@ const init = (store) => {
     startObserver,
     removeObserver,
     startObserving,
+    loaderTimer
   };
 
 }
