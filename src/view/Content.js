@@ -27,12 +27,12 @@ export default (function () {
       return m('.flex.flex-row.w-100.white.animated.fadeInUp', {
         oncreate: action.startObserver,
         onremove: action.removeObserver,
-        class: `${store.getCurrentSection()}-ns`
+        class: `bg-${store.getCurrentSection()}`
       }, [
         m('.left-side.w-30.pa4.sticky.dn.db-l',
           m('div.sticky',
-            m('.f2.pv3.white.fw9', m.trust(section.title1)),
-            m('.pt2.mb5.pb5.white', m.trust(section.detailedDesc)),
+            m('.f2.pv3.white.fw9', m.trust(section.title
+            )),
             section.menuList.reduce((obj, value, index) => {
               obj[index] = m('.pointer.f3.transition-all.up.pv1.white.roboto', {
                 class: `${value.isAnchored?'b transform-up':'normal'}`,
@@ -62,7 +62,7 @@ export default (function () {
       }, ['about', 'work', 'contact'].reduce((obj, item, index) => {
         obj[index] = m(`section.${item}-ns.h-100-l.h-33`, {
             class: `${store.isSectionOpen
-                ?store.selectedSection===index
+                ?store.selectedSection===index+1
                 ?'w-100 active overflow-x-hidden'
                 :'w-33-l'
                 :'w-33-l flex-l db flex-column justify-end-l pointer pa2' 

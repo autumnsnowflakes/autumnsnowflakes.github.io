@@ -62,16 +62,16 @@
   background: #263238; }
 
 .bg-about {
-  background: #ee4b4c; }
+  background: #4a9bed; }
 
 .bg-work {
-  background: #4a9bed; }
+  background: #a4a4a4; }
+
+.bg-contact {
+  background: #ee4b4c; }
 
 .z-10 {
   z-index: 10; }
-
-.bg-contact {
-  background: #d2bdaa; }
 
 .color-light-white {
   color: #90a4ae; }
