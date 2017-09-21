@@ -7,8 +7,6 @@ export default (function () {
     console.log('about');
     return m('div', 'abour');
   }
-
-
   const work = (store) => {
     return m('div', 'work');
   }
@@ -18,18 +16,50 @@ export default (function () {
   }
 
   function page(store) {
-    switch (store.mode) {
-      case 'about':
+    switch (store.selectedSection) {
+      case 1:
         return about(store);
         break;
-      case 'work':
+      case 2:
         return work(store);
         break;
-      case 'contact':
+      case 3:
         return contact(store);
         break;
     }
   }
+
+  const projectDetail = (store, action, section) => {
+
+    if (store.isSectionOpen) {
+      return m('.flex.flex-row.w-100.white.animated.fadeInUp', {
+        oncreate: action.startObserver,
+        onremove: action.removeObserver,
+        class: `${store.getCurrentSection()}-ns`
+      }, [
+        m('.left-side.w-30.pa4.sticky.dn.db-l',
+          m('div.sticky',
+            m('.f2.pv3.white.fw9', m.trust(section.title1)),
+            m('.pt2.mb5.pb5.white', m.trust(section.detailedDesc)),
+            section.menuList.reduce((obj, value, index) => {
+              obj[index] = m('.pointer.f3.transition-all.up.pv1.white.roboto', {
+                class: `${value.isAnchored?'b transform-up':'normal'}`,
+                sectionId: index,
+                onclick: function () {
+                  action.scrollToAnchor(index, value.href);
+                },
+                oncreate: function () {
+                  action.startObserving(value.href);
+                }
+              }, value.text);
+              return obj;
+            }, [])),
+        ),
+        m('.flex.flex-column.ph6-l.ph3.bg-white.right-side.w-70-l.w-100.bg-white.m-auto.pt2.pb6', page(store, action))
+      ])
+    }
+  }
+
   const landing = function (store, action) {
 
     return m('#content.h-100-l.flex-l.flex-row-l.animated.w-100.w-auto-l', {
@@ -50,7 +80,7 @@ export default (function () {
             onclick: m.withAttr("sectionId", action.openSection)
           }, m(`.cover.w-100 flex.flex-column.parallax-child items-center`, {
               class: `${store.isSectionOpen
-                ? 'justify-center-l pa4 h-50 justify-end':
+                ? 'justify-center-l pa4 h-75 justify-end':
                 'justify-end-l pointer h-100'}`
             },
             m('.pa3.relative.transition-1.tc.flex.flex-column.justify-center.items-center', {
@@ -60,10 +90,18 @@ export default (function () {
                 src: `/src/asset/icon/${item}.svg`,
                 class: `${store.mode!=='landing'?'dn':''}`
               }),
-              m('.desc.roboto.white-90.pv2.f2.txt-shadow-2', item),
+              m('.roboto.white-90.pv2.txt-shadow-2', {
+                class: `${store.isSectionOpen
+                ?'f1 fw9 '
+              :'desc f3 fw7'}`
+              }, item),
             )
           ),
-          store.mode !== 'landing' && m('.w-80.m-auto.animated.fadeInUp.h-75', page(store))
+          store.isSectionOpen ?
+          store.selectedSection === index + 1 ?
+          projectDetail(store, action, store.section.list[index]) :
+          '' :
+          ''
         )
 
 

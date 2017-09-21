@@ -172,8 +172,50 @@ const init = (store) => {
     }).start();
 
     store.isSectionOpen = false;
-
   }
+
+  const navAnchor = function (d) {
+    let dir = d == 'up' && true;
+
+    // when up && e>1, focus menu item
+    // when down && e<1 hide menu item
+    return function (e, v) {
+      console.log(dir, e[0].target.id);
+      console.info(e[0].intersectionRatio);
+      let sectionId = parseInt(e[e.length - 1].target.getAttribute('anchorId'));
+
+      if (e[e.length - 1].intersectionRatio) {
+        store.section.list[store.selectedSection - 1].menuList = store.section.list[store.selectedSection - 1].menuList.map((value, i) => {
+          if (i <= sectionId) {
+            value.isAnchored = true;
+          } else {
+            value.isAnchored = false;
+          }
+          return value;
+        });
+      }
+      m.redraw();
+
+    }
+  }
+
+  const startObserver = function () {
+
+    store.observer = new IntersectionObserver(navAnchor('down'), {
+      root: document.querySelector('#kickstart'),
+      rootMargin: "60px 0px 0px 0px"
+    })
+  };
+
+  const removeObserver = function () {
+    store.observer.disconnect()
+  };
+
+  const startObserving = function (id) {
+    console.log(id);
+    store.observer.observe(document.querySelector(id))
+  }
+
 
 
 
@@ -182,7 +224,10 @@ const init = (store) => {
     background,
     openSection,
     scrollLandingTo,
-    closeSection
+    closeSection,
+    startObserver,
+    removeObserver,
+    startObserving,
   };
 
 }
