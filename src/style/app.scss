@@ -74,6 +74,10 @@
   background: #4a9bed;
 }
 
+.z-10{
+  z-index:10;
+}
+
 .bg-contact {
   background: #d2bdaa;
 }
@@ -89,7 +93,6 @@
 .w-5 {
   width: 5%;
 }
-
 
 
 /* optional: show position indicator in red */
@@ -135,4 +138,79 @@
       transform: translateY(-3px);
     }
   }
+}
+
+.h-33-l {
+  height: 33%;
+}
+
+#kickstart {
+  height: 108%;
+  overflow-y: hidden;
+  &.open {
+    height: 100%;
+  }
+  #content {
+    z-index: 1;
+    transition: 400ms ease-in-out;
+    section {
+      position: relative;
+      transition: 200ms ease-out;
+      background-size: cover;
+      font-family: 'Roboto';
+      font-weight: 700;
+      height: 100%;
+      .desc {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+      }
+      &.active {
+        /* Create the parallax scrolling effect */
+        background-position: 0 center;
+        background-size: cover;
+        overflow-y: scroll;
+        perspective: 1px;
+        perspective-origin: 0 0;
+        .parallax-child {
+          transform-origin: 0 0; // transform: translateZ(-2px) scale(3);
+        }
+      }
+      &:hover,
+      &.active {
+        .desc {
+          transition: opacity 200ms ease-in;
+          opacity: 1;
+          display: block;
+          position: relative;
+          margin-bottom: 1rem;
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.w-33-ns {
+  width: calc(100vw/3);
+}
+
+.w-33-l {
+  width: calc(100vw/3);
+}
+
+.h-40-ns {
+  height: 40%;
+}
+
+.about-ns {
+  background: #3395de;
+}
+
+.work-ns {
+  background: #c3c3c3;
+}
+
+.contact-ns {
+  background: #fa0a4c;
 }

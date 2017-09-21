@@ -1,5 +1,5 @@
 import m from 'mithril'
-
+import Button from './Button'
 import Content from './Content'
 
 
@@ -11,7 +11,9 @@ const init = () => {
         return m('#kickstart.flex.flex-row-l.justify-start.transition', {
             class: action.background()
           },
-          Content(store, action)
+          Button(store, action),
+          Content(store, action),
+
         )
 
       }

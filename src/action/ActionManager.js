@@ -1,4 +1,7 @@
 import m from 'mithril';
+import KUTE from 'kute.js';
+import RAF from './../util/RAF'
+
 
 const init = (store) => {
 
@@ -24,7 +27,14 @@ const init = (store) => {
 
   const goToState = function (state) {
     store.mode = state;
+    if (state === 'landing') {
+      store.isSectionOption = false;
+    } else {
+      store.isSectionOption = true;
+    }
   };
+
+
 
   const background = function () {
     switch (store.mode) {
@@ -44,9 +54,135 @@ const init = (store) => {
     }
   }
 
+  const openSection = function (id) {
+    if (!store.isSectionOpen) {
+      let self = this;
+      let parent = self.parentNode;
+      let superParent = parent.parentNode;
+      let offsetLeft = self.offsetLeft;
+      let scrollLeft = superParent.scrollLeft;
+      let superParentWidth = superParent.offsetWidth;
+
+
+      // let to = -1 * offsetLeft + scrollLeft;
+      let to = ((id - 1) * self.offsetWidth) - scrollLeft;
+
+      // console.log(to);
+      // setting store values
+      let {
+        section
+      } = store;
+      store.selectedSection = section.id = parseInt(id);
+      section.prevSectionPosition = superParent.scrollLeft;
+      section.prevSectionWidth = self.offsetWidth;
+      section.superParentWidth = superParentWidth
+      KUTE.fromTo(`#section-${id}`, {
+        width: section.prevSectionWidth
+      }, {
+        width: superParentWidth
+      }, {
+        duration: 300,
+        easing: 'easeOutSine',
+        complete: () => {
+
+          KUTE.to('#content', {
+            translateX: -to
+          }, {
+            duration: 250,
+            easing: 'easeOutSine'
+          }).start();
+        }
+      }).start();
+
+
+      setTimeout(() => {
+        store.isSectionOpen = true;
+        m.redraw();
+      }, 200);
+
+    }
+  }
+
+
+  const scrollLandingTo = function (mode) {
+
+    if (store.isSectionOpen) {
+      document.getElementById(`section-${store.selectedSection}`).style.width = `${store.section.prevSectionWidth}px`;
+
+      [1, 2, 3].map(function (i, v) {
+        document.getElementById(`section-${i}`).scrollTop = 0
+      });
+
+      if (mode === 'next') {
+        store.selectedSection++;
+        document.getElementById('content').style.transform = `translateX(${-(store.selectedSection-1)*store.section.prevSectionWidth+document.getElementById('kickstart').scrollLeft}px)`; // Multiplied by 40
+      } else {
+        store.selectedSection--;
+        document.getElementById('content').style.transform = `translateX(${-(store.selectedSection-1)*store.section.prevSectionWidth+document.getElementById('kickstart').scrollLeft}px)`; // Multiplied by 40
+      }
+      document.getElementById(`section-${store.selectedSection}`).style.width = `${store.section.superParentWidth}px`
+
+
+      // openSection(store.selectedSection);
+    } else {
+      if (mode === 'next') {
+        RAF.scrollToX('kickstart', document.getElementById('kickstart').scrollLeft + document.getElementById('section-1').offsetWidth, 2000);
+
+        // document.getElementyId('kickstart').scrollLeft += document.getElementById('section-1').offsetWidth;
+
+      } else {
+        RAF.scrollToX('kickstart', document.getElementById('kickstart').scrollLeft - document.getElementById('section-1').offsetWidth, 2000);
+
+        // document.getElementById('kickstart').scrollLeft -= document.getElementById('section-1').offsetWidth;
+      }
+    }
+  }
+
+  const closeSection = function () {
+    let section = store.section;
+    let {
+      prevSectionPosition,
+      prevSectionWidth,
+      id
+    } = section;
+
+    KUTE.fromTo('#content', {
+      translateX: section.prevSectionPosition
+    }, {
+      translateX: 0
+    }, {
+      easing: 'easeInSine',
+      duration: 250,
+      complete: () => {
+        if (store.mode === 'landing') {
+          KUTE.fromTo(`#section-${store.selectedSection}`, {
+            width: prevSectionPosition
+          }, {
+            width: prevSectionWidth
+          }, {
+            easing: 'easeInSine',
+            duration: 250,
+            complete: function () {
+
+            }
+          }).start();
+        }
+
+      }
+    }).start();
+
+    store.isSectionOpen = false;
+
+  }
+
+
+
   return {
     goToState,
-    background
+    background,
+    openSection,
+    scrollLandingTo,
+    closeSection
   };
 
 }
