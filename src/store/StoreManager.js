@@ -57,7 +57,7 @@ const init = function () {
       name: 'contact',
       title: 'Contact',
       menuList: [{
-        text: "Contact",
+        text: "Contact Form",
         isAnchored: false,
         href: '#contact'
       }]

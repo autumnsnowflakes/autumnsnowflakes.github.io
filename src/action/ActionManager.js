@@ -39,7 +39,7 @@ const init = (store) => {
   const background = function () {
     switch (store.mode) {
       case 'landing':
-        return 'bg-navy';
+        return 'dark-navy';
         break;
       case 'about':
         return 'bg-about';
@@ -223,6 +223,22 @@ const init = (store) => {
       m.redraw();
     }, 2500);
   }
+
+  const scrollToAnchor = function (index, id) {
+  
+    RAF.scrollToY(`section-${store.selectedSection}`, document.querySelector(id).offsetTop, 3000);
+
+    store.section.list[store.selectedSection - 1].menuList = store.section.list[store.selectedSection - 1].menuList.map((value, i) => {
+      if (i <= index) {
+        value.isAnchored = true;
+      } else {
+        value.isAnchored = false;
+      }
+      return value;
+    });
+
+  };
+
 
 
   return {
