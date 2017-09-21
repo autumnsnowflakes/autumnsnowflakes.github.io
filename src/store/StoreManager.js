@@ -123,7 +123,7 @@ const init = function () {
   };
 
   store.getCurrentSection = function (){
-    this.sections[this.selectedSection];
+    return this.sections[this.selectedSection-1];
   }
 
 
